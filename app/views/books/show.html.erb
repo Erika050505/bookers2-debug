@@ -23,13 +23,41 @@
 					</td>
 					<td><%= link_to @book.title, book_path(@book) %></td>
 					<td><%= @book.body %></td>
+					<td><%= @book.favorites.count %>
+                      <% if Favorite.find_by(user_id: current_user.id, book_id: @book.id) %>
+　                        <%= link_to book_favorites_path(@book), method: :delete do %>
+                              　<span class="fa fa-heart like-btn-unlike"></span>
+                  		  <% end %>
+                 	  <% else %>
+                        　<%= link_to book_favorites_path(@book), method: :post do %>
+                                <span class="fa fa-heart like-btn"></span>
+     				      <% end %>
+ 					  <% end %>
+ 					 </td>
+ 					 <td>
+ 					 	 コメント数：<%= @comments.count %>
+ 					 	 <% if @comment.user == current_user %>
+				            <div>
+				              <%= link_to "削除", books_path, method: :delete, class: "btn btn-danger pull-right" %>
+				            </div>
+				         <% end %>
+ 					 </td>
+ 				</tr>
+ 				<tr>
 					<% if @book.user==current_user %>
 					<td><%= link_to "Edit", edit_book_path(@book), class: "btn-sm btn-success edit_book_#{@book.id}" %></td>
 					<td><%= link_to "Destroy", book_path(@book), method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{@book.id}" %></td>
 			    	<% end %>
 				</tr>
 			</table>
-
+				<%= form_with model:[@book, @comment], local:true do |f| %>
+	 			  <div class="field row">
+				    <%= f.text_area :content, class: 'col-xs-12 comment_content' %>
+				  </div>
+				  <div class="actions row">
+				    <%= f.submit '送信', class: 'btn btn-primary col-xs-12' %>
+				  </div>
+				<% end %>
 	</div>
 </div>
 
