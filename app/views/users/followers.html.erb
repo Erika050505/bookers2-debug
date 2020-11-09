@@ -1,0 +1,14 @@
+<div class="body">
+ <div class="container">
+   <h1>フォロワー一覧</h1>
+      <% @user.followers.each do |user| %>
+      <table>
+      <tr>
+        <td>  <%= user.name %> </td>
+        <td><%= link_to '詳細', user_path(user) %></td>
+      </tr>
+      
+      </table>
+      <% end %>
+ </div>
+</div>

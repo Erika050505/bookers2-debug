@@ -3,14 +3,19 @@ class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:edit, :update]
 
   def index
+    @user = User.new
     @users = User.all
     @book = Book.new
+    @followings = @user.followings
+    @followers = @user.followers
   end
   
   def show
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
+    @followings = @user.followings
+    @followers = @user.followers
   end
 
   def edit
@@ -25,6 +30,18 @@ class UsersController < ApplicationController
       render "edit"
     end
   end
+  
+  #def following
+  #    @user  = User.find(params[:id])
+   #   @users = @user.followings
+    #  render 'show_followings'
+  #end
+
+  #def followers
+  #  @user  = User.find(params[:id])
+  #  @users = @user.followers
+  #  render 'show_followers'
+  #end
 
   private
   def user_params
